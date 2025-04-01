@@ -25,7 +25,7 @@ export default function WatchlistPage() {
         setIsLoading(true);
         const token = localStorage.getItem('token');
         
-        const response = await axios.get('http://localhost:5000/api/user', {
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -56,7 +56,7 @@ export default function WatchlistPage() {
     try {
       const token = localStorage.getItem('token');
       
-      const response = await axios.delete(`http://localhost:5000/api/user/remove/${itemId}`, {
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/user/remove/${itemId}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }

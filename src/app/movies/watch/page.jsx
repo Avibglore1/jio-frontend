@@ -83,7 +83,7 @@ function MovieWatchPageContent() {
 
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/user', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -115,7 +115,7 @@ function MovieWatchPageContent() {
     }
   
     try {
-      const res = await fetch("http://localhost:5000/api/user/add", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -3,8 +3,6 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Script from "next/script";
 
-// Backend URL running on port 5000
-const BACKEND_URL = "http://localhost:5000"; 
 
 export default function Subscription() {
   const router = useRouter();
@@ -58,7 +56,7 @@ export default function Subscription() {
       
       // Call your backend API to create a Razorpay order
       // Using the exact route from your server: /api/payment/order
-      const response = await fetch(`${BACKEND_URL}/api/payment/order`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/order`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -119,7 +117,7 @@ export default function Subscription() {
       setLoading(true);
       
       // Using the exact route from your server: /api/payment/update-premium-access
-      const response = await fetch(`${BACKEND_URL}/api/payment/update-premium-access`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/payment/update-premium-access`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

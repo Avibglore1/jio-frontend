@@ -5,7 +5,7 @@ export default function Logout() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await axios.post("http://localhost:5000/api/auth/logout", {}, { withCredentials: true });
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/api/auth/logout`, {}, { withCredentials: true });
     localStorage.removeItem("token");
     router.push("/login");
   };

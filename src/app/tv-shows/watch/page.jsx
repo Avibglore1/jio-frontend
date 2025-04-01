@@ -87,7 +87,7 @@ function TvShowWatchPageContent() {
 
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/user', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -119,7 +119,7 @@ function TvShowWatchPageContent() {
     }
   
     try {
-      const res = await fetch("http://localhost:5000/api/user/add", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/add`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -158,7 +158,7 @@ function TvShowWatchPageContent() {
     }
   
     try {
-      const res = await fetch(`http://localhost:5000/api/user/remove/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/user/remove/${id}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`,
