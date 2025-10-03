@@ -14,6 +14,11 @@ const HeroHomeCarousel = () => {
   const [movies, setMovies] = useState([]);
   const router = useRouter();
 
+  const truncate = (text, length = 25) => {
+    if (!text) return "No description available.";
+    return text.split(" ").slice(0, length).join(" ") + (text.split(" ").length > length ? "..." : "");
+  };
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -33,23 +38,30 @@ const HeroHomeCarousel = () => {
     router.push(`/movies/watch?id=${movieId}`);
   };
 
+  if (movies.length === 0) {
+    return (
+      <div className="h-[500px] flex items-center justify-center bg-black text-white">
+        <p>Loading movies...</p>
+      </div>
+    );
+  }
+
   return (
     <Swiper
       modules={[Navigation, Pagination, Autoplay]}
       navigation
       pagination={{ clickable: true }}
       autoplay={{ delay: 5000 }}
-      loop={true}
-      className="w-full h-[500px]"
+      loop
+      className="relative w-full h-[500px] overflow-hidden"
     >
       {movies.map((movie) => (
         <SwiperSlide key={movie.id}>
           <div className="relative h-[500px] w-full">
-            {/* Background Image with Fallback */}
             {movie.backdrop_path ? (
               <Image
                 src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                alt={movie.title}
+                alt={movie.title || "Movie Poster"}
                 fill
                 style={{ objectFit: "cover" }}
                 priority
@@ -60,25 +72,16 @@ const HeroHomeCarousel = () => {
               </div>
             )}
 
-            {/* Dark Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-black/80 to-transparent"></div>
 
-            {/* Movie Content */}
             <div className="absolute bottom-10 left-10 text-white max-w-[600px]">
-              <h1 className="text-5xl font-extrabold drop-shadow-lg">
-                {movie.title}
-              </h1>
-
+              <h1 className="text-5xl font-extrabold drop-shadow-lg">{movie.title}</h1>
               <p className="mt-3 text-lg leading-snug opacity-90">
-                {movie.overview?.length > 150
-                  ? movie.overview.substring(0, 150) + "..."
-                  : movie.overview || "No description available."}
+                {truncate(movie.overview, 25)}
               </p>
-
-              {/* Watch Now Button */}
               <Button
                 size="lg"
-                className="mt-4 px-6 py-2 bg-pink-500 text-black rounded cursor-pointer hover:bg-white hover:text-black transition duration-300"
+                className="mt-4 px-6 py-2 bg-pink-500 text-black rounded hover:bg-white hover:text-black transition duration-300"
                 onClick={() => handleWatchNow(movie.id)}
               >
                 Watch Now
